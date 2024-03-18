@@ -11,8 +11,8 @@ public class SpikeHeadMove : MonoBehaviour
     [SerializeField]
     private float mFreQuency = 1.0f;
 
-    private Vector3 mPos;
-
+    private Vector3 mPos;   
+   
 
     private void Awake()
     {
@@ -22,11 +22,12 @@ public class SpikeHeadMove : MonoBehaviour
     private void Update()
     {
         float movePosY = MathF.Sin(Time.time * mFreQuency) * mAmplitude;
+     
+        Vector3 pos = Vector3.up * movePosY;      
 
-        Vector3 pos = mPos + Vector3.up * movePosY;
-        transform.position = pos;
+        transform.position = mPos + pos;            
 
-        if(transform.position.y <= mPos.y - (mAmplitude - 0.01))
+        if (transform.position.y <= mPos.y - (mAmplitude - 0.01))
         Debug.Log("여기서 딱 그만");
 
     }
