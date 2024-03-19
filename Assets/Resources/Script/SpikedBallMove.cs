@@ -16,6 +16,8 @@ public class SpikedBallMove : MonoBehaviour
     private void Awake()
     {
         mPos = transform.position;
+        //Radius Offeset
+        mPos.y += mRadius;
     }
 
     private void Update()
@@ -30,6 +32,11 @@ public class SpikedBallMove : MonoBehaviour
         pos.y = -mRadius * Mathf.Cos(Mathf.Deg2Rad * angle);
 
         transform.position = mPos + pos;
+
+        
+        
+
+
 
     }
 
