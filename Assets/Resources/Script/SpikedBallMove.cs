@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpikedBallMove : MonoBehaviour
+public class SpikedBallMove : Enemy
 {
     [SerializeField]
     private float mRadius = 1.0f;
@@ -11,8 +11,9 @@ public class SpikedBallMove : MonoBehaviour
     private float mAngleSpeed = 1.0f;
 
     private Vector3 mPos;
+    [SerializeField]
     private const float mMaxAngle = 90.0f;
-
+    
     public float Radius
     {
         get { return mRadius; }

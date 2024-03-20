@@ -20,6 +20,14 @@ public class SceneMgr : MonoBehaviour
     private SceneType mCurrentScene;
     [SerializeField]
     private Image mFadeImgae;
+    [SerializeField]
+    private GameObject mFadeObj;
+    [SerializeField]
+    private GameObject mWinObj;
+    [SerializeField]
+    private GameObject mDeadObj;
+
+    private Transform mStage_2Tr;
 
     private Color mFadeColor;
 
@@ -35,17 +43,30 @@ public class SceneMgr : MonoBehaviour
         set { mCurrentScene = value; }
     }
 
-
+    
 
 
     private void Awake()
     {
-        CurScene = SceneType.TITLE;
+        mCurrentScene = SceneType.TITLE;
         DontDestroyOnLoad(this);
         mFadeColor = mFadeImgae.color;
+        
+    }
+    private void Start()
+    {
+        Engine.mInstance.mAudioMgr.PlayBgm(AudioMgr.BgmType.TITLEBGM);
     }
 
-    
+    public void PlayerWin()
+    {
+        mWinObj.SetActive(true);
+    }
+
+    public void PlayerDead()
+    {
+        mDeadObj.SetActive(true);
+    }
 
 
     public void NextScene()
@@ -57,14 +78,22 @@ public class SceneMgr : MonoBehaviour
         }
         mCurrentScene++;
     }
+
+    public void SceneChange(Vector3 _pos)
+    {
+        StartCoroutine(FadeInOut());
+        StartCoroutine(ReCall(_pos));
+    }
     public void SceneChange()
     {
+        Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.CLICK);
         StartCoroutine(FadeInOut());
         StartCoroutine(ReCall(new Vector3(7.0f, -4.49f, 0.0f)));
     }
 
     public IEnumerator FadeInOut()
     {
+        mFadeObj.SetActive(true);
         while (mFadeTime <= mFadeMaxTime)
         {
             Debug.Log("FadeIn");
@@ -85,6 +114,7 @@ public class SceneMgr : MonoBehaviour
             mFadeImgae.color = mFadeColor;
             yield return null;
         }
+        mFadeObj.SetActive(false);
     }
 
 
@@ -95,16 +125,41 @@ public class SceneMgr : MonoBehaviour
 
         yield return new WaitForSeconds(3.0f);
 
-        SceneManager.LoadScene("PlayScene");
+        if (mCurrentScene == SceneType.TITLE)
+        {
+            SceneManager.LoadScene("PlayScene");
+            Engine.mInstance.mAudioMgr.PlayBgm(AudioMgr.BgmType.STAGE_1);
+        }
+
         NextScene();
-        Engine.mInstance.mPlayer.gameObject.SetActive(false);
-
         Engine.mInstance.mPlayer.GetComponent<Transform>().position = _pos;
-
-        yield return new WaitForSeconds(2.0f);
-        Transform tr = GameObject.Find("Stage_1").GetComponent<Transform>();
-        Transform tr1 = GameObject.Find("STAGE").GetComponent<Transform>();
-        Transform tr2 = tr1.transform.Find("Stage_2").GetComponent<Transform>();
+        yield return null;
+        Engine.mInstance.mPlayer.gameObject.SetActive(false);
+                
+        switch (mCurrentScene)
+        {
+            case SceneType.STAGE_1:
+                {                    
+                    Transform tr1 = GameObject.Find("STAGE").GetComponent<Transform>();
+                    mStage_2Tr = tr1.transform.Find("Stage_2").GetComponent<Transform>();
+                }
+                break;
+            case SceneType.STAGE_2:
+                {
+                    Engine.mInstance.mAudioMgr.PlayBgm(AudioMgr.BgmType.STAGE_2);
+                    Transform tr1 = GameObject.Find("Stage_1").GetComponent<Transform>();
+                    tr1.gameObject.SetActive(false);
+                    mStage_2Tr.gameObject.SetActive(true);
+                }
+                break;
+            case SceneType.STAGE_3:
+                break;
+            case SceneType.END:
+                break;
+            default:
+                break;
+        }
+        
         Engine.mInstance.mPlayer.gameObject.SetActive(true);
         Engine.mInstance.mPlayer.GetComponent<SpawnEffect>().Appear();        
     }

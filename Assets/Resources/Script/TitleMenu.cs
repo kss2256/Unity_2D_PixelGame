@@ -22,6 +22,7 @@ public class TitleMenu : MonoBehaviour, IPointerClickHandler, IPointerEnterHandl
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.DRAG);
         mMarkTr.gameObject.SetActive(true);
     }
 

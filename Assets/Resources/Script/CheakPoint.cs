@@ -7,6 +7,7 @@ public class CheakPoint : MonoBehaviour
 
     private Animator mAnimator;
     private bool        mEnd;
+    private Vector3 mStage_2Pos = new Vector3(35.35f, -2.49f);
 
 
     private void Awake()
@@ -31,10 +32,35 @@ public class CheakPoint : MonoBehaviour
             {
                 mEnd = true;
                 mAnimator.Play("Hit");
+                if(Engine.mInstance.mSceneMgr.CurScene == SceneMgr.SceneType.STAGE_1)
+                StartCoroutine(Stage_2());
+                else if(Engine.mInstance.mSceneMgr.CurScene == SceneMgr.SceneType.STAGE_2)
+                {
+                    Win();
+                    
+                }
             }
         }
-
     }
 
+
+    public IEnumerator Stage_2()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        SpawnEffect spawn = Engine.mInstance.mPlayer.GetComponent<SpawnEffect>();
+        spawn.Disappear();
+
+        yield return new WaitForSeconds(0.5f);
+        Engine.mInstance.mSceneMgr.SceneChange(mStage_2Pos);        
+    }
+
+    public IEnumerator Win()
+    {
+        yield return new WaitForSeconds(2.0f);
+
+        Engine.mInstance.mSceneMgr.PlayerWin();
+
+    }
 
 }

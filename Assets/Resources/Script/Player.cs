@@ -8,7 +8,7 @@ using static Player;
 //using static UnityEditor.PlayerSettings;
 //using static UnityEngine.RuleTile.TilingRuleOutput;
 using static SettingMenu;
-using static UnityEditor.Experimental.GraphView.GraphView;
+
 
 
 public class Player : MonoBehaviour
@@ -54,16 +54,15 @@ public class Player : MonoBehaviour
     //상태 체크
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-           
-        }
+        
+       
 
         if (Input.GetKeyDown(KeyCode.Space) && !mIsJump)
         {
            
             if (mSituation == Situation.JUMP || mSituation == Situation.FALL)
             {
+                Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.JUMP);
                 mIsJump = true;
                 mRigidbody.velocity = Vector2.zero;
                 mSituation = Situation.DOUBLE_JUMP;
@@ -72,6 +71,7 @@ public class Player : MonoBehaviour
             }
             else
             {
+                Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.JUMP);
                 mSituation = Situation.JUMP;
                 mRigidbody.AddForce(Vector2.up * mJumpForce, ForceMode2D.Impulse);
                 mAnimator.SetTrigger("Jump");
@@ -108,10 +108,13 @@ public class Player : MonoBehaviour
     {
         Vector3 newVec = mInputVec * mSpeed * Time.fixedDeltaTime;
         newVec.y = 0;
-        if(mSituation == Situation.RUN)
-        transform.position += newVec;
+        if (mSituation == Situation.RUN)
+        {            
+            Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.WALK);
+            transform.position += newVec;
+        }
         else
-        transform.position += newVec * 0.75f;
+            transform.position += newVec * 0.75f;
 
         // transform.Translate(newVec);
         Debug.DrawRay(mRigidbody.position, Vector3.down, Color.green);

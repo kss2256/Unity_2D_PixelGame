@@ -93,6 +93,7 @@ public class SettingMenu : MonoBehaviour
     }
     public void OnMenu()
     {
+        Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.CLICK);
         gameObject.SetActive(true);
         mbMenu = true;
     }

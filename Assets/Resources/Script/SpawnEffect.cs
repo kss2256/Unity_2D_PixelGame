@@ -54,6 +54,7 @@ public class SpawnEffect : MonoBehaviour
     {
         //Animation Setting
         mAnimator.Play("Appearing");
+        Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.APPEARING);
     }
     public void Appear()
     {
@@ -61,7 +62,7 @@ public class SpawnEffect : MonoBehaviour
         mCurSpawnTime = mMinSpawnTime;
         mFuncAddTime = Up;
         mbIsAppear = true;
-
+        Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.APPEAR);
     }
 
     public void Disappear()
@@ -70,6 +71,7 @@ public class SpawnEffect : MonoBehaviour
         mCurSpawnTime = mMaxSpawnTime;
         mFuncAddTime = Down;
         mbIsAppear = true;
+        Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.DISAPPER);
 
     }
 

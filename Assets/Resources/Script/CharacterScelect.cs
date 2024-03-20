@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CharacterScelect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class CharacterScelect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     private delegate float FunctionAddTime();
 
@@ -51,16 +51,20 @@ public class CharacterScelect : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     }
 
-
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
         mbCurSclect = true;
         mFuncAdd = Up;
         Debug.Log(gameObject.name + "Mouse In Scelect Box");
+        Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.DRAG);
     }
-    
-  
-    
+
+    public void OnPointerClick(PointerEventData eventData)
+    {   
+        Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.FIRE);
+    }
+
     public void OnPointerExit(PointerEventData eventData)
     {
         mbCurSclect = false;

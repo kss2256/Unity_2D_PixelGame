@@ -11,6 +11,7 @@ public class Engine : MonoBehaviour
     [Header ("# Game Part")]
     public Player mPlayer;
     public SceneMgr mSceneMgr;
+    public AudioMgr mAudioMgr;
 
     private void Awake()
     {

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using UnityEditor.U2D;
 using UnityEngine;
 
-public class SawMove : MonoBehaviour
+public class SawMove : Enemy
 {
     public enum Direction
     {
@@ -199,15 +199,7 @@ public class SawMove : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {      
-       
-            StartCoroutine(KnockBack(collision.gameObject));
-        }
-
-    }
+    
 
     private IEnumerator SawAction()
     {
@@ -218,24 +210,7 @@ public class SawMove : MonoBehaviour
         mCount = 0;
     }
 
-    private IEnumerator KnockBack(GameObject _target)
-    {
-        Engine.mInstance.mPlayer.Hit();
-        
-
-        Vector3 playerPos = _target.transform.position;
-        Vector3 dirVec = playerPos - transform.position;
-        Rigidbody2D mRigidbody = _target.GetComponent<Rigidbody2D>();        
-        mRigidbody.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
-
-
-        //FixedUpdate 1프레임 멈추는
-        yield return mWaitFixedUpdate;
-       
-        //원하는 시간만큼 멈추는
-        //yield return new WaitForSeconds(1f);
-        //yield return new WaitForSecondsRealtime(2f); 
-    }
+    
 
 
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpikeHeadMove : MonoBehaviour
+public class SpikeHeadMove : Enemy
 {
 
     [SerializeField]
@@ -39,30 +39,6 @@ public class SpikeHeadMove : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
 
-            StartCoroutine(KnockBack(collision.gameObject));
-        }
-
-    }
-
-    private IEnumerator KnockBack(GameObject _target)
-    {
-        Engine.mInstance.mPlayer.Hit();
-
-
-        Vector3 playerPos = _target.transform.position;
-        Vector3 dirVec = playerPos - transform.position;
-        Rigidbody2D mRigidbody = _target.GetComponent<Rigidbody2D>();
-        mRigidbody.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
-
-        
-        yield return mWaitFixedUpdate;
-
-       
-    }
 
 }

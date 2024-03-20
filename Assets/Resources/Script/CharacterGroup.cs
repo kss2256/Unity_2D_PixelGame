@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CharacterGroup : MonoBehaviour, IPointerClickHandler
+public class CharacterGroup : MonoBehaviour
 {  
 
     private GameObject mCurObj;
@@ -61,14 +61,7 @@ public class CharacterGroup : MonoBehaviour, IPointerClickHandler
     }
 
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        //mIconImage.color = Color.black;
-        
-
-
-        Debug.Log(gameObject.name + "Mouse Button Click");
-    }
+    
 
     public void ScelectGameObject(GameObject _obj)
     {
