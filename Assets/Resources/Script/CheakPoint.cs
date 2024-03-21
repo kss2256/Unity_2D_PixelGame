@@ -30,13 +30,15 @@ public class CheakPoint : MonoBehaviour
         {
             if(mEnd == false)
             {
+                Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.END_POINT);
+
                 mEnd = true;
                 mAnimator.Play("Hit");
                 if(Engine.mInstance.mSceneMgr.CurScene == SceneMgr.SceneType.STAGE_1)
                 StartCoroutine(Stage_2());
                 else if(Engine.mInstance.mSceneMgr.CurScene == SceneMgr.SceneType.STAGE_2)
                 {
-                    Win();
+                    StartCoroutine(Win());
                     
                 }
             }
@@ -57,6 +59,10 @@ public class CheakPoint : MonoBehaviour
 
     public IEnumerator Win()
     {
+        yield return new WaitForSeconds(1.0f);
+
+        Engine.mInstance.mPlayer.GetComponent<SpawnEffect>().Disappear();
+
         yield return new WaitForSeconds(2.0f);
 
         Engine.mInstance.mSceneMgr.PlayerWin();

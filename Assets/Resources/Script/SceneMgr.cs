@@ -60,11 +60,13 @@ public class SceneMgr : MonoBehaviour
 
     public void PlayerWin()
     {
+        Engine.mInstance.mAudioMgr.StopBgm();
         mWinObj.SetActive(true);
     }
 
     public void PlayerDead()
     {
+        Engine.mInstance.mAudioMgr.StopBgm();
         mDeadObj.SetActive(true);
     }
 

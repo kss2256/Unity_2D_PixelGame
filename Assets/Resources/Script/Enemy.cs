@@ -7,10 +7,9 @@ public class Enemy : MonoBehaviour
 
     private WaitForFixedUpdate mWaitFixedUpdate;
 
-
     private void Awake()
     {
-        mWaitFixedUpdate = new WaitForFixedUpdate();
+        mWaitFixedUpdate = new WaitForFixedUpdate();       
     }
 
 
@@ -26,6 +25,8 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator KnockBack(GameObject _target)
     {
+
+        Engine.mInstance.mPlayer.GetComponent<HpScript>().PopHp();
         Engine.mInstance.mPlayer.Hit();
         Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.HIT);
 
@@ -38,9 +39,16 @@ public class Enemy : MonoBehaviour
         //FixedUpdate 1프레임 멈추는
         yield return mWaitFixedUpdate;
 
-        //원하는 시간만큼 멈추는
-        //yield return new WaitForSeconds(1f);
-        //yield return new WaitForSecondsRealtime(2f); 
+        if(Engine.mInstance.mPlayer.Hp <= 0)
+        {
+            Engine.mInstance.mPlayer.mbIsDead = true;
+            Engine.mInstance.mPlayer.GetComponent<SpawnEffect>().Disappear();
+            yield return new WaitForSeconds(3f);
+            Engine.mInstance.mPlayer.gameObject.SetActive(false);
+            Engine.mInstance.mSceneMgr.PlayerDead();
+        }
+
+       
     }
 
 }

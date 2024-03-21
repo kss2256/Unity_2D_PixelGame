@@ -29,7 +29,9 @@ public class Player : MonoBehaviour
     public float        mSpeed;
     public float        mJumpForce;
     public bool         mIsJump;
-    public int          mHp;
+    public bool         mbIsDead = false;
+    private int          mHp;
+    private int          mMaxHp = 4;
 
     public Situation    mSituation = Situation.IDLE;
 
@@ -38,11 +40,22 @@ public class Player : MonoBehaviour
     private Rigidbody2D mRigidbody;
     private Animator mAnimator;
     
+    public int Hp
+    {
+        get { return mHp; }
+        set { mHp = value; }
+    }
+    public int MaxHp
+    {
+        get { return mMaxHp; }
+    }
 
     //초기화
     private void Awake()
     {
-        DontDestroyOnLoad(this);  
+        DontDestroyOnLoad(this);
+        
+        mHp = mMaxHp;
         mSpriteRenderer = GetComponent<SpriteRenderer>(); 
         mRigidbody = GetComponent<Rigidbody2D>();
         mAnimator = GetComponent<Animator>();
@@ -54,7 +67,8 @@ public class Player : MonoBehaviour
     //상태 체크
     private void Update()
     {
-        
+        if (mbIsDead)
+            return;
        
 
         if (Input.GetKeyDown(KeyCode.Space) && !mIsJump)
@@ -106,6 +120,9 @@ public class Player : MonoBehaviour
     //이동 로직
     private void FixedUpdate()
     {
+        if (mbIsDead)
+            return;
+
         Vector3 newVec = mInputVec * mSpeed * Time.fixedDeltaTime;
         newVec.y = 0;
         if (mSituation == Situation.RUN)
@@ -125,6 +142,9 @@ public class Player : MonoBehaviour
     //마지막 작업
     private void LateUpdate()
     {
+        if (mbIsDead)
+            return;
+
         //플레이어 방향 전환
         //mInputVec.y = 0;
         if (mInputVec.x != 0)

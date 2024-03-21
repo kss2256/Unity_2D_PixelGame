@@ -24,6 +24,7 @@ public class AudioMgr : MonoBehaviour
         DEAD,
         DISAPPER,
         WALK,
+        ITEM,
     }
 
     [Header("#BGM")]
@@ -76,6 +77,10 @@ public class AudioMgr : MonoBehaviour
         mBgmPlayers.Play();
     }
 
+    public void StopBgm()
+    {
+        mBgmPlayers.Stop();
+    }
 
     public void PlaySfx(SfxType _type)
     {
