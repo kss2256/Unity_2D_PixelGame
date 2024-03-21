@@ -175,6 +175,11 @@ public class SceneMgr : MonoBehaviour
         Engine.mInstance.mPlayer.GetComponent<SpawnEffect>().Appear();        
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
 
     private void DontDestroyObjectDestroy()
     {

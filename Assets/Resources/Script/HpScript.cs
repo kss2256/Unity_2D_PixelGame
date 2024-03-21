@@ -38,7 +38,7 @@ public class HpScript : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            CreateHp();
+            PushHp();
         }
 
     }
