@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
             Engine.mInstance.mPlayer.mbIsDead = true;
             Engine.mInstance.mPlayer.GetComponent<SpawnEffect>().Disappear();
             yield return new WaitForSeconds(3f);
-            Engine.mInstance.mPlayer.gameObject.SetActive(false);
+            
             Engine.mInstance.mSceneMgr.PlayerDead();
         }
 

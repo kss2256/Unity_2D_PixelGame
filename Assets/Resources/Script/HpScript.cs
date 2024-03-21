@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 //using UnityEngine.UI;
 
 public class HpScript : MonoBehaviour
@@ -15,19 +16,16 @@ public class HpScript : MonoBehaviour
 
     private Stack<GameObject> mHpObjs = new Stack<GameObject>();
 
+    public GameObject HpBar
+    {
+        get { return mHpBar; }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-
         CreateHp();
-       
-
-   
-
-
-        //mHpBar.SetActive(false);
-
+      
     }
 
     // Update is called once per frame
@@ -36,16 +34,15 @@ public class HpScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            PushHp();
+            PopHp();
         }
         if (Input.GetKeyDown(KeyCode.W))
         {
-            PopHp();
+            CreateHp();
         }
 
     }
-
-
+    
 
     private void CreateHp()
     {

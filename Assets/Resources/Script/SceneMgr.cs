@@ -68,6 +68,7 @@ public class SceneMgr : MonoBehaviour
     {
         Engine.mInstance.mAudioMgr.StopBgm();
         mDeadObj.SetActive(true);
+        StartCoroutine(TitleScene());
     }
 
 
@@ -91,6 +92,7 @@ public class SceneMgr : MonoBehaviour
         Engine.mInstance.mAudioMgr.PlaySfx(AudioMgr.SfxType.CLICK);
         StartCoroutine(FadeInOut());
         StartCoroutine(ReCall(new Vector3(7.0f, -4.49f, 0.0f)));
+        
     }
 
     public IEnumerator FadeInOut()
@@ -119,9 +121,15 @@ public class SceneMgr : MonoBehaviour
         mFadeObj.SetActive(false);
     }
 
+    public IEnumerator TitleScene()
+    {
+        yield return new WaitForSeconds(1.5f);
+
+        DontDestroyObjectDestroy();
+        SceneManager.LoadScene("TitleScene");
+    }
 
 
-   
     private IEnumerator ReCall(Vector3 _pos)
     { 
 
@@ -131,6 +139,7 @@ public class SceneMgr : MonoBehaviour
         {
             SceneManager.LoadScene("PlayScene");
             Engine.mInstance.mAudioMgr.PlayBgm(AudioMgr.BgmType.STAGE_1);
+            Engine.mInstance.mPlayer.GetComponent<HpScript>().HpBar.gameObject.SetActive(true);
         }
 
         NextScene();
@@ -164,6 +173,26 @@ public class SceneMgr : MonoBehaviour
         
         Engine.mInstance.mPlayer.gameObject.SetActive(true);
         Engine.mInstance.mPlayer.GetComponent<SpawnEffect>().Appear();        
+    }
+
+
+    private void DontDestroyObjectDestroy()
+    {
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    private void OnSceneUnloaded(Scene scene)
+    {
+        GameObject[] dontDestroyObjects = GameObject.FindGameObjectsWithTag("DontDestroy");
+
+        for (int i = 0; i < dontDestroyObjects.Length; i++)
+        {
+            Destroy(dontDestroyObjects[i]);
+        }
+    }
+    private void OnDestroy()
+    {
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
 
 }

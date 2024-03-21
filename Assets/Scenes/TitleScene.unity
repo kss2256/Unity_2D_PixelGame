@@ -1200,7 +1200,7 @@ GameObject:
   - component: {fileID: 638897229}
   m_Layer: 0
   m_Name: SceneMgr
-  m_TagString: Untagged
+  m_TagString: DontDestroy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1542,7 +1542,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &707282408
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3878,7 +3878,7 @@ GameObject:
   - component: {fileID: 1181076754}
   m_Layer: 0
   m_Name: AudioMgr
-  m_TagString: Untagged
+  m_TagString: DontDestroy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4243,7 +4243,7 @@ GameObject:
   - component: {fileID: 1270749573}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: DontDestroy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4280,8 +4280,7 @@ MonoBehaviour:
   mSpeed: 5
   mJumpForce: 10
   mIsJump: 0
-  mHp: 0
-  mMaxHp: 0
+  mbIsDead: 0
   mSituation: 0
 --- !u!50 &1270749569
 Rigidbody2D:
@@ -8477,7 +8476,7 @@ GameObject:
   - component: {fileID: 1793775081}
   m_Layer: 0
   m_Name: Engine
-  m_TagString: Untagged
+  m_TagString: DontDestroy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
