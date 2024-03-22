@@ -62,6 +62,7 @@ public class SceneMgr : MonoBehaviour
     {
         Engine.mInstance.mAudioMgr.StopBgm();
         mWinObj.SetActive(true);
+        StartCoroutine(TitleScene());
     }
 
     public void PlayerDead()
